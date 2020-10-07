@@ -40,18 +40,20 @@ void PlayScene::update()
 	
 	updateDisplayList();
 
+	auto wookiePosition = m_pWookie->getTransform()->position; 
+	
 
 	// Updating the label content
 
 
 	// set value for RangeLabel
-	out << std::fixed << "Range: " << m_pBall->getTransform()->position.x << "m";
+	out << std::fixed << "Range: " << m_pBall->getTransform()->position.x - wookiePosition.x<< "m";
 	m_pRangeLabel->setText(out.str());
 
 	// set value for HeightLabel
 	out.str("");
 	out.clear();
-	out << std::fixed << "Height: "<< m_pBall->getTransform()->position.y << "m";
+	out << std::fixed << "Height: "<< - m_pBall->getTransform()->position.y + wookiePosition.y << "m";
 	m_pHeightLabel->setText(out.str());
 
 	// set value for VelocityLabel
@@ -146,45 +148,45 @@ void PlayScene::start()
 	m_playerFacingRight = true;
 
 	// Back Button
-	m_pBackButton = new Button("../Assets/textures/backButton.png", "backButton", BACK_BUTTON);
-	m_pBackButton->getTransform()->position = glm::vec2(300.0f, 400.0f);
-	m_pBackButton->addEventListener(CLICK, [&]()-> void
-		{
-			m_pBackButton->setActive(false);
-			TheGame::Instance()->changeSceneState(START_SCENE);
-		});
+	//m_pBackButton = new Button("../Assets/textures/backButton.png", "backButton", BACK_BUTTON);
+	//m_pBackButton->getTransform()->position = glm::vec2(300.0f, 400.0f);
+	//m_pBackButton->addEventListener(CLICK, [&]()-> void
+	//	{
+	//		m_pBackButton->setActive(false);
+	//		TheGame::Instance()->changeSceneState(START_SCENE);
+	//	});
 
-	m_pBackButton->addEventListener(MOUSE_OVER, [&]()->void
-		{
-			m_pBackButton->setAlpha(128);
-		});
+	//m_pBackButton->addEventListener(MOUSE_OVER, [&]()->void
+	//	{
+	//		m_pBackButton->setAlpha(128);
+	//	});
 
-	m_pBackButton->addEventListener(MOUSE_OUT, [&]()->void
-		{
-			m_pBackButton->setAlpha(255);
-		});
-	addChild(m_pBackButton);
+	//m_pBackButton->addEventListener(MOUSE_OUT, [&]()->void
+	//	{
+	//		m_pBackButton->setAlpha(255);
+	//	});
+	//addChild(m_pBackButton);
 
-	// Next Button
-	m_pNextButton = new Button("../Assets/textures/nextButton.png", "nextButton", NEXT_BUTTON);
-	m_pNextButton->getTransform()->position = glm::vec2(500.0f, 400.0f);
-	m_pNextButton->addEventListener(CLICK, [&]()-> void
-		{
-			m_pNextButton->setActive(false);
-			TheGame::Instance()->changeSceneState(END_SCENE);
-		});
+	//// Next Button
+	//m_pNextButton = new Button("../Assets/textures/nextButton.png", "nextButton", NEXT_BUTTON);
+	//m_pNextButton->getTransform()->position = glm::vec2(500.0f, 400.0f);
+	//m_pNextButton->addEventListener(CLICK, [&]()-> void
+	//	{
+	//		m_pNextButton->setActive(false);
+	//		TheGame::Instance()->changeSceneState(END_SCENE);
+	//	});
 
-	m_pNextButton->addEventListener(MOUSE_OVER, [&]()->void
-		{
-			m_pNextButton->setAlpha(128);
-		});
+	//m_pNextButton->addEventListener(MOUSE_OVER, [&]()->void
+	//	{
+	//		m_pNextButton->setAlpha(128);
+	//	});
 
-	m_pNextButton->addEventListener(MOUSE_OUT, [&]()->void
-		{
-			m_pNextButton->setAlpha(255);
-		});
+	//m_pNextButton->addEventListener(MOUSE_OUT, [&]()->void
+	//	{
+	//		m_pNextButton->setAlpha(255);
+	//	});
 
-	addChild(m_pNextButton);
+	//addChild(m_pNextButton);
 
 	/* Instructions Label */
 	m_pInstructionsLabel = new Label("Press the backtick (`) character to toggle Debug View", "Consolas");
@@ -221,8 +223,6 @@ void PlayScene::GUI_Function() const
 
 	ImGui::Separator();
 
-	// To do: Figure out why this check box isn't working. 
-
 	static bool gravityEnabled = false;
 	if (ImGui::Checkbox("Gravity", &gravityEnabled))
 	{
@@ -244,9 +244,6 @@ void PlayScene::GUI_Function() const
 		m_pBall->throwSpeed = throwingVelocity;
 	}
 
-		
-
-
 	static int xPlayerPos = 100;
 	if (ImGui::SliderInt("Player xPosition", &xPlayerPos, 0, 800))
 	{
@@ -255,17 +252,10 @@ void PlayScene::GUI_Function() const
 		m_pBall->getTransform()->position = glm::vec2(xPlayerPos, 350);
 	}
 
-	/*static float velocity[2] = { 0 , 0 };
-	if (ImGui::SliderFloat2("Throw Speed", velocity, 0, 50))
-	{
-		m_pBall->throwSpeed = glm::vec2(velocity[0], -velocity[1]);
-	}*/
-
 	static int xStormtrooperPos = 585;
 	if (ImGui::SliderInt("Stormtrooper xPosition", &xStormtrooperPos, 0, 800))
 	{
 		m_pStormtrooper->getTransform()->position.x = xStormtrooperPos;
-		//m_pPlayer->getTransform()->position.x = xPlayerPos;
 	}
 
 	ImGui::End();
