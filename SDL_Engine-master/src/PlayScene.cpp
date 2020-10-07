@@ -37,7 +37,7 @@ void PlayScene::update()
 {
 	std::ostringstream out;
 	out.precision(2);
-	out << std::fixed << m_pBall->getTransform()->position.x << "m";
+	out << std::fixed << "Range: " << m_pBall->getTransform()->position.x << "m";
 	updateDisplayList();
 
 
@@ -50,17 +50,17 @@ void PlayScene::update()
 	// set value for HeightLabel
 	out.str("");
 	out.clear();
-	out << std::fixed << m_pBall->getTransform()->position.y << "m";
+	out << std::fixed << "Height: "<< m_pBall->getTransform()->position.y << "m";
 	m_pHeightLabel->setText(out.str());
 
 	// set value for VelocityLabel
 	out.str("");
 	out.clear();
 	float magnitude = Util::magnitude(m_pBall->getRigidBody()->velocity);
-	out << std::fixed << magnitude << "m/s^2";
+	out << std::fixed <<"Velocity: " << magnitude << "m/s^2";
 	m_pVelocityLabel->setText(out.str());
 
-	
+
 
 }
 
@@ -101,20 +101,21 @@ void PlayScene::start()
 {
 	const SDL_Color blue = { 0, 0, 255, 255 };
 
-	// Range Label
+	// Range label
 	m_pRangeLabel = new Label("Position", "Consolas", 40, blue, glm::vec2(400.0f, 40.0f));
 	m_pRangeLabel->setParent(this);
 	addChild(m_pRangeLabel);
 
-	// Height Label
+	// Height label
 	m_pHeightLabel = new Label("Position", "Consolas", 40, blue, glm::vec2(400.0f, 80.0f));
 	m_pHeightLabel->setParent(this);
 	addChild(m_pHeightLabel);
 
-	// Velocity
+	// Velocity label
 	m_pVelocityLabel = new Label("Velocity", "Consolas", 40, blue, glm::vec2(400.0f, 120.0f));
 	m_pVelocityLabel->setParent(this);
 	addChild(m_pVelocityLabel);
+
 
 	// Loads the background texture from disk to ram
 	TextureManager::Instance()->load("../Assets/textures/Tatooine.jpg", "background");

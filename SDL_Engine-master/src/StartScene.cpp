@@ -50,11 +50,11 @@ void StartScene::start()
 	m_pStartLabel->setParent(this);
 	addChild(m_pStartLabel);
 
-	m_pNameLabel1 = new Label("Kiera Bacon", "Consolas", 40, blue, glm::vec2(400.0f, 180.0f));
+	m_pNameLabel1 = new Label("Kiera Bacon 101050135", "Consolas", 40, blue, glm::vec2(400.0f, 180.0f));
 	m_pNameLabel1->setParent(this);
 	addChild(m_pNameLabel1);
 
-	m_pNameLabel2 = new Label("Sam Pollock", "Consolas", 40, blue, glm::vec2(400.0f, 220.0f));
+	m_pNameLabel2 = new Label("Sam Pollock 101279608", "Consolas", 40, blue, glm::vec2(400.0f, 220.0f));
 	m_pNameLabel2->setParent(this);
 	addChild(m_pNameLabel2);
 
