@@ -124,20 +124,21 @@ void PlayScene::start()
 	// Set GUI Title
 	m_guiTitle = "Play Scene";
 
+	//// Stormtrooper
+	m_pStormtrooper = new Stormtrooper();
+	addChild(m_pStormtrooper);
 	
-	
+	// Ball
+	m_pBall = new Target();
+	addChild(m_pBall);
+
+
 	// Wookie
 	m_pWookie = new Wookie();
 	addChild(m_pWookie);
 	//m_pWookie->getTransform()->scale = glm::vec2(0.1f, 0.1f);
 
-	// Ball
-	m_pBall = new Target();
-	addChild(m_pBall);
 
-	//// Stormtrooper
-	m_pStormtrooper = new Stormtrooper();
-	addChild(m_pStormtrooper);
 
 	// Player Sprite
 	//m_pPlayer = new Player();
