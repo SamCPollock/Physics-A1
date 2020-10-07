@@ -37,7 +37,7 @@ void PlayScene::update()
 {
 	std::ostringstream out;
 	out.precision(2);
-	out << std::fixed << "Range: " << m_pBall->getTransform()->position.x << "m";
+	
 	updateDisplayList();
 
 
@@ -45,6 +45,7 @@ void PlayScene::update()
 
 
 	// set value for RangeLabel
+	out << std::fixed << "Range: " << m_pBall->getTransform()->position.x << "m";
 	m_pRangeLabel->setText(out.str());
 
 	// set value for HeightLabel
