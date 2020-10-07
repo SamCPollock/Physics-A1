@@ -136,8 +136,8 @@ void PlayScene::start()
 	//m_pWookie->getTransform()->scale = glm::vec2(0.1f, 0.1f);
 
 	//// Stormtrooper
-	//m_pStormtrooper = new Stormtrooper();
-	//addChild(m_pStormtrooper);
+	m_pStormtrooper = new Stormtrooper();
+	addChild(m_pStormtrooper);
 
 	// Player Sprite
 	m_pPlayer = new Player();

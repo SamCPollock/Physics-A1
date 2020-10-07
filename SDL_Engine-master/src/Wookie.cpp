@@ -3,11 +3,12 @@
 
 Wookie::Wookie()
 {
-	TextureManager::Instance()->load("../Assets/textures/Wookie.png","wookie");
+	TextureManager::Instance()->load("../Assets/textures/wookieSmall.png","wookie");
 	
 	const auto size = TextureManager::Instance()->getTextureSize("wookie");
 	setWidth(size.x);
 	setHeight(size.y);
+	getTransform()->scale = glm::vec2(10, 10);
 	getTransform()->position = glm::vec2(100.0f, 100.0f);
 	getRigidBody()->velocity = glm::vec2(0, 0);
 	getRigidBody()->isColliding = false;

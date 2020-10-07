@@ -3,7 +3,7 @@
 
 Stormtrooper::Stormtrooper()
 {
-	TextureManager::Instance()->load("../Assets/textures/stormtrooper.png", "stormtrooper");
+	TextureManager::Instance()->load("../Assets/textures/stormtrooperSmall.png", "stormtrooper");
 
 	const auto size = TextureManager::Instance()->getTextureSize("stormtrooper");
 	setWidth(size.x);
