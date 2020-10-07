@@ -121,7 +121,7 @@ void PlayScene::handleEvents()
 void PlayScene::start()
 {
 	// Loads the background texture from disk to ram
-	TextureManager::Instance()->load("../Assets/textures/corridor.png", "background");
+	TextureManager::Instance()->load("../Assets/textures/Tatooine.jpg", "background");
 
 	// Set GUI Title
 	m_guiTitle = "Play Scene";
@@ -135,9 +135,9 @@ void PlayScene::start()
 	addChild(m_pWookie);
 	//m_pWookie->getTransform()->scale = glm::vec2(0.1f, 0.1f);
 
-	// Stormtrooper
-	m_pStormtrooper = new Stormtrooper();
-	addChild(m_pStormtrooper);
+	//// Stormtrooper
+	//m_pStormtrooper = new Stormtrooper();
+	//addChild(m_pStormtrooper);
 
 	// Player Sprite
 	m_pPlayer = new Player();
