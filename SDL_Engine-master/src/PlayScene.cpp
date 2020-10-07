@@ -37,31 +37,28 @@ void PlayScene::update()
 {
 	std::ostringstream out;
 	out.precision(2);
-	out << std::fixed << std::to_string(m_pBall->getTransform()->position.x);
+	out << std::fixed << m_pBall->getTransform()->position.x << "m";
 	updateDisplayList();
 
 
 	// Updating the label content
-	std::string labelText = "";
 
 
 	// set value for RangeLabel
-	labelText = out.str();
-
-	//glm::vec2 vel = m_pBall->getRigidBody()->velocity;
-	//float magnitude = Util::magnitude(vel);
-	m_pRangeLabel->setText(labelText);
+	m_pRangeLabel->setText(out.str());
 
 	// set value for HeightLabel
-	labelText = std::to_string(m_pBall->getTransform()->position.y);
-	//glm::vec2 vel = m_pBall->getRigidBody()->velocity;
-	//float magnitude = Util::magnitude(vel);
-	m_pHeightLabel->setText(labelText);
+	out.str("");
+	out.clear();
+	out << std::fixed << m_pBall->getTransform()->position.y << "m";
+	m_pHeightLabel->setText(out.str());
 
 	// set value for VelocityLabel
+	out.str("");
+	out.clear();
 	float magnitude = Util::magnitude(m_pBall->getRigidBody()->velocity);
-	labelText = std::to_string(magnitude);
-	m_pVelocityLabel->setText(labelText);
+	out << std::fixed << magnitude << "m/s^2";
+	m_pVelocityLabel->setText(out.str());
 
 	
 
@@ -191,6 +188,12 @@ void PlayScene::start()
 	m_pInstructionsLabel->getTransform()->position = glm::vec2(Config::SCREEN_WIDTH * 0.5f, 500.0f);
 
 	addChild(m_pInstructionsLabel);
+
+
+
+
+
+
 }
 
 void PlayScene::GUI_Function() const
@@ -202,6 +205,8 @@ void PlayScene::GUI_Function() const
 	//ImGui::ShowDemoWindow();
 
 	ImGui::Begin("Physics Controls", NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_MenuBar);
+
+
 
 	if (ImGui::Button("Throw"))
 	{
@@ -239,12 +244,12 @@ void PlayScene::GUI_Function() const
 		
 
 
-	static int xPlayerPos = 200;
+	static int xPlayerPos = 100;
 	if (ImGui::SliderInt("Player xPosition", &xPlayerPos, 0, 800))
 	{
 		m_pWookie->getTransform()->position.x = xPlayerPos;
 		//m_pPlayer->getTransform()->position.x = xPlayerPos;
-		m_pBall->getTransform()->position = glm::vec2(xPlayerPos, 300);
+		m_pBall->getTransform()->position = glm::vec2(xPlayerPos, 350);
 	}
 
 	/*static float velocity[2] = { 0 , 0 };
@@ -253,15 +258,13 @@ void PlayScene::GUI_Function() const
 		m_pBall->throwSpeed = glm::vec2(velocity[0], -velocity[1]);
 	}*/
 
-	static float float3[3] = { 0.0f, 1.0f, 1.5f };
-	if(ImGui::SliderFloat3("My Slider", float3, 0.0f, 2.0f))
+	static int xStormtrooperPos = 585;
+	if (ImGui::SliderInt("Stormtrooper xPosition", &xStormtrooperPos, 0, 800))
 	{
-		std::cout << float3[0] << std::endl;
-		std::cout << float3[1] << std::endl;
-		std::cout << float3[2] << std::endl;
-		std::cout << "---------------------------\n";
+		m_pStormtrooper->getTransform()->position.x = xStormtrooperPos;
+		//m_pPlayer->getTransform()->position.x = xPlayerPos;
 	}
-	
+
 	ImGui::End();
 	ImGui::EndFrame();
 

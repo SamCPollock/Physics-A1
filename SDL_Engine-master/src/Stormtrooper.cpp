@@ -8,7 +8,7 @@ Stormtrooper::Stormtrooper()
 	const auto size = TextureManager::Instance()->getTextureSize("stormtrooper");
 	setWidth(size.x);
 	setHeight(size.y);
-	getTransform()->position = glm::vec2(400.0f, 100.0f);
+	getTransform()->position = glm::vec2(585, 350.0);
 	getRigidBody()->velocity = glm::vec2(0, 0);
 	getRigidBody()->isColliding = false;
 

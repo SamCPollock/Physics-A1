@@ -10,7 +10,7 @@ Target::Target()
 	const auto size = TextureManager::Instance()->getTextureSize("circle");
 	setWidth(size.x);
 	setHeight(size.y);
-	getTransform()->position = glm::vec2(100.0f, 100.0f);
+	getTransform()->position = glm::vec2(100.0f, 350);
 	getRigidBody()->velocity = glm::vec2(0, 0);
 	getRigidBody()->isColliding = false;
 
@@ -44,7 +44,7 @@ void Target::m_move()
 {
 	float deltaTime = 1.0f / 60;
 	glm::vec2 gravity = glm::vec2(0, 9.8);
-	float metersPerPixel = 30;
+	float metersPerPixel = 1;
 
 
 	if (gravityEnabled)
