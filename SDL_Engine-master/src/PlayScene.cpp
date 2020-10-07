@@ -1,6 +1,9 @@
 #include "PlayScene.h"
 #include "Game.h"
 #include "EventManager.h"
+#include "Util.h"
+#include <sStream>
+#include <iomanip>
 
 // required for IMGUI
 #include "imgui.h"
@@ -32,7 +35,36 @@ void PlayScene::draw()
 
 void PlayScene::update()
 {
+	std::ostringstream out;
+	out.precision(2);
+	out << std::fixed << std::to_string(m_pBall->getTransform()->position.x);
 	updateDisplayList();
+
+
+	// Updating the label content
+	std::string labelText = "";
+
+
+	// set value for RangeLabel
+	labelText = out.str();
+
+	//glm::vec2 vel = m_pBall->getRigidBody()->velocity;
+	//float magnitude = Util::magnitude(vel);
+	m_pRangeLabel->setText(labelText);
+
+	// set value for HeightLabel
+	labelText = std::to_string(m_pBall->getTransform()->position.y);
+	//glm::vec2 vel = m_pBall->getRigidBody()->velocity;
+	//float magnitude = Util::magnitude(vel);
+	m_pHeightLabel->setText(labelText);
+
+	// set value for VelocityLabel
+	float magnitude = Util::magnitude(m_pBall->getRigidBody()->velocity);
+	labelText = std::to_string(magnitude);
+	m_pVelocityLabel->setText(labelText);
+
+	
+
 }
 
 void PlayScene::clean()
@@ -45,61 +77,11 @@ void PlayScene::handleEvents()
 	EventManager::Instance().update();
 
 	// handle player movement with GameController
-	if (SDL_NumJoysticks() > 0)
-	{
-		if (EventManager::Instance().getGameController(0) != nullptr)
-		{
-			const auto deadZone = 10000;
-			if (EventManager::Instance().getGameController(0)->LEFT_STICK_X > deadZone)
-			{
-				m_pPlayer->setAnimationState(PLAYER_RUN_RIGHT);
-				m_playerFacingRight = true;
-			}
-			else if (EventManager::Instance().getGameController(0)->LEFT_STICK_X < -deadZone)
-			{
-				m_pPlayer->setAnimationState(PLAYER_RUN_LEFT);
-				m_playerFacingRight = false;
-			}
-			else
-			{
-				if (m_playerFacingRight)
-				{
-					m_pPlayer->setAnimationState(PLAYER_IDLE_RIGHT);
-				}
-				else
-				{
-					m_pPlayer->setAnimationState(PLAYER_IDLE_LEFT);
-				}
-			}
-		}
-	}
+	
 
 
 	// handle player movement if no Game Controllers found
-	if (SDL_NumJoysticks() < 1)
-	{
-		if (EventManager::Instance().isKeyDown(SDL_SCANCODE_A))
-		{
-			m_pPlayer->setAnimationState(PLAYER_RUN_LEFT);
-			m_playerFacingRight = false;
-		}
-		else if (EventManager::Instance().isKeyDown(SDL_SCANCODE_D))
-		{
-			m_pPlayer->setAnimationState(PLAYER_RUN_RIGHT);
-			m_playerFacingRight = true;
-		}
-		else
-		{
-			if (m_playerFacingRight)
-			{
-				m_pPlayer->setAnimationState(PLAYER_IDLE_RIGHT);
-			}
-			else
-			{
-				m_pPlayer->setAnimationState(PLAYER_IDLE_LEFT);
-			}
-		}
-	}
+	
 	
 
 	if (EventManager::Instance().isKeyDown(SDL_SCANCODE_ESCAPE))
@@ -120,28 +102,47 @@ void PlayScene::handleEvents()
 
 void PlayScene::start()
 {
+	const SDL_Color blue = { 0, 0, 255, 255 };
+
+	// Range Label
+	m_pRangeLabel = new Label("Position", "Consolas", 40, blue, glm::vec2(400.0f, 40.0f));
+	m_pRangeLabel->setParent(this);
+	addChild(m_pRangeLabel);
+
+	// Height Label
+	m_pHeightLabel = new Label("Position", "Consolas", 40, blue, glm::vec2(400.0f, 80.0f));
+	m_pHeightLabel->setParent(this);
+	addChild(m_pHeightLabel);
+
+	// Velocity
+	m_pVelocityLabel = new Label("Velocity", "Consolas", 40, blue, glm::vec2(400.0f, 120.0f));
+	m_pVelocityLabel->setParent(this);
+	addChild(m_pVelocityLabel);
+
 	// Loads the background texture from disk to ram
 	TextureManager::Instance()->load("../Assets/textures/Tatooine.jpg", "background");
 
 	// Set GUI Title
 	m_guiTitle = "Play Scene";
 
-	// Ball
-	m_pBall = new Target();
-	addChild(m_pBall);
+	
 	
 	// Wookie
 	m_pWookie = new Wookie();
 	addChild(m_pWookie);
 	//m_pWookie->getTransform()->scale = glm::vec2(0.1f, 0.1f);
 
+	// Ball
+	m_pBall = new Target();
+	addChild(m_pBall);
+
 	//// Stormtrooper
 	m_pStormtrooper = new Stormtrooper();
 	addChild(m_pStormtrooper);
 
 	// Player Sprite
-	m_pPlayer = new Player();
-	addChild(m_pPlayer);
+	//m_pPlayer = new Player();
+	//addChild(m_pPlayer);
 	m_playerFacingRight = true;
 
 	// Back Button
@@ -204,7 +205,7 @@ void PlayScene::GUI_Function() const
 
 	if (ImGui::Button("Throw"))
 	{
-		m_pBall->throwPosition = m_pPlayer->getTransform()->position;
+		m_pBall->throwPosition = m_pWookie->getTransform()->position;
 		m_pBall->doThrow();
 
 		std::cout << "Throw Pressed" << std::endl;
@@ -220,20 +221,37 @@ void PlayScene::GUI_Function() const
 		m_pBall->gravityEnabled = gravityEnabled;
 	}
 
+	// Angle slider
+	static float throwingAngle = 0;
+	if (ImGui::SliderFloat("Throw Angle", &throwingAngle, 0, 180))
+	{
+		m_pBall->throwAngle = -throwingAngle;
+	}
+	
+
+	// Velocity slider
+	static float throwingVelocity = 0;
+	if (ImGui::SliderFloat("throw velocity", &throwingVelocity, 0, 100))
+	{
+		m_pBall->throwSpeed = throwingVelocity;
+	}
+
+		
+
 
 	static int xPlayerPos = 200;
 	if (ImGui::SliderInt("Player xPosition", &xPlayerPos, 0, 800))
 	{
 		m_pWookie->getTransform()->position.x = xPlayerPos;
-		m_pPlayer->getTransform()->position.x = xPlayerPos;
+		//m_pPlayer->getTransform()->position.x = xPlayerPos;
 		m_pBall->getTransform()->position = glm::vec2(xPlayerPos, 300);
 	}
 
-	static float velocity[2] = { 0 , 0 };
+	/*static float velocity[2] = { 0 , 0 };
 	if (ImGui::SliderFloat2("Throw Speed", velocity, 0, 50))
 	{
 		m_pBall->throwSpeed = glm::vec2(velocity[0], -velocity[1]);
-	}
+	}*/
 
 	static float float3[3] = { 0.0f, 1.0f, 1.5f };
 	if(ImGui::SliderFloat3("My Slider", float3, 0.0f, 2.0f))

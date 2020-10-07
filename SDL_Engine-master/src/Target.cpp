@@ -1,10 +1,11 @@
 #include "Target.h"
 #include "TextureManager.h"
+#include "glm/glm.hpp"
 
 
 Target::Target()
 {
-	TextureManager::Instance()->load("../Assets/textures/Circle.png","circle");
+	TextureManager::Instance()->load("../Assets/textures/thermalDetonator.png","circle");
 
 	const auto size = TextureManager::Instance()->getTextureSize("circle");
 	setWidth(size.x);
@@ -69,6 +70,7 @@ void Target::m_reset()
 
 void Target::doThrow()
 {
-	getRigidBody()->velocity = throwSpeed;
+	getRigidBody()->velocity = glm::vec2(cos(glm::radians(throwAngle)), sin(glm::radians(throwAngle)));
+	getRigidBody()->velocity *= throwSpeed;
 	getTransform()->position = throwPosition;
 }

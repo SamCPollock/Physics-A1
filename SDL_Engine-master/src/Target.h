@@ -18,8 +18,9 @@ public:
 	void doThrow();
 
 	bool gravityEnabled = false;
-	glm::vec2 throwSpeed;
+	float throwSpeed;
 	glm::vec2 throwPosition;
+	float throwAngle;
 
 private:
 	void m_move();

@@ -24,6 +24,7 @@ public:
 	virtual void handleEvents() override;
 	virtual void start() override;
 
+
 private:
 	// IMGUI Function
 	void GUI_Function() const;
@@ -32,7 +33,7 @@ private:
 	glm::vec2 m_mousePosition;
 
 	Target* m_pBall;
-	Player* m_pPlayer;
+	//Player* m_pPlayer;
 	Wookie* m_pWookie;
 	Stormtrooper* m_pStormtrooper;
 
@@ -42,6 +43,10 @@ private:
 	Button* m_pBackButton;
 	Button* m_pNextButton;
 	Label* m_pInstructionsLabel;
+	Label* m_pRangeLabel;
+	Label* m_pHeightLabel;
+	Label* m_pVelocityLabel;
+
 };
 
 #endif /* defined (__PLAY_SCENE__) */
