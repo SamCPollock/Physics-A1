@@ -18,6 +18,9 @@ public:
 	void doThrow();
 
 	bool gravityEnabled = false;
+	float gravity;
+	bool simStarted = false;
+	float floor;
 	float throwSpeed;
 	glm::vec2 throwPosition;
 	float throwAngle;

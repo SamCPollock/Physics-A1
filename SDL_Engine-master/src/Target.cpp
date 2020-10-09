@@ -42,26 +42,32 @@ void Target::clean()
 
 void Target::m_move()
 {
-	float deltaTime = 1.0f / 60;
-	glm::vec2 gravity = glm::vec2(0, 9.8);
-	float metersPerPixel = 1;
-
-
-	if (gravityEnabled)
+	if(simStarted)
 	{
-		getRigidBody()->velocity += (getRigidBody()->acceleration + gravity) * deltaTime;
-	}
-	else
-	{
-		getRigidBody()->velocity += getRigidBody()->acceleration * deltaTime;
-	}
+		float deltaTime = 1.0f / 60;
+		glm::vec2 gravityvec = glm::vec2(0, gravity);
+		float metersPerPixel = 1;
 
-	getTransform()->position += (getRigidBody()->velocity * metersPerPixel) * deltaTime; // actually move it
 
+		if(gravityEnabled)
+		{
+			getRigidBody()->velocity += (getRigidBody()->acceleration + gravityvec) * deltaTime;
+		}
+		else
+		{
+			getRigidBody()->velocity += getRigidBody()->acceleration * deltaTime;
+		}
+
+		getTransform()->position += (getRigidBody()->velocity * metersPerPixel) * deltaTime; // actually move it
+	}
 }
 
 void Target::m_checkBounds()
 {
+	if(getTransform()->position.y >= floor)
+	{
+		simStarted = false;
+	}
 }
 
 void Target::m_reset()
@@ -70,6 +76,7 @@ void Target::m_reset()
 
 void Target::doThrow()
 {
+	simStarted = true;
 	getRigidBody()->velocity = glm::vec2(cos(glm::radians(throwAngle)), sin(glm::radians(throwAngle)));
 	getRigidBody()->velocity *= throwSpeed;
 	getTransform()->position = throwPosition;

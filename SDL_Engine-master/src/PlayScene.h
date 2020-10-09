@@ -10,6 +10,7 @@
 #include "Target.h"
 #include "Wookie.h"
 #include "Stormtrooper.h"
+#include "SimulationStats.h"
 
 class PlayScene : public Scene
 {
@@ -24,10 +25,11 @@ public:
 	virtual void handleEvents() override;
 	virtual void start() override;
 
-
+	SimulationStats m_sim;
+	float floor;
 private:
 	// IMGUI Function
-	void GUI_Function() const;
+	void GUI_Function();
 	std::string m_guiTitle;
 	
 	glm::vec2 m_mousePosition;
@@ -46,6 +48,7 @@ private:
 	Label* m_pRangeLabel;
 	Label* m_pHeightLabel;
 	Label* m_pVelocityLabel;
+	Label* m_pStatsLabel;
 
 };
 
