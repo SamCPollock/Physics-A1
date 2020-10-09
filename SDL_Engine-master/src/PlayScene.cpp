@@ -152,7 +152,7 @@ void PlayScene::start()
 	addChild(m_pVelocityLabel);
 
 	// Stats label
-	m_pStatsLabel = new Label("Stats", "Consolas", 20, blue, glm::vec2(40.0f, 40.0f));
+	m_pStatsLabel = new Label("Stats", "Consolas", 20, blue, glm::vec2(80.0f, 40.0f));
 	m_pStatsLabel->setParent(this);
 	addChild(m_pStatsLabel);
 
@@ -300,13 +300,18 @@ void PlayScene::GUI_Function()
 	if(ImGui::RadioButton("Speed##s1", &primaryDependentVariable, 1))		{ m_sim.primaryVariable = static_cast<SimulationStats::variable>(primaryDependentVariable); }; ImGui::SameLine();
 	if(ImGui::RadioButton("Angle##a1", &primaryDependentVariable, 2))		{ m_sim.primaryVariable = static_cast<SimulationStats::variable>(primaryDependentVariable); }; ImGui::SameLine();
 	if(ImGui::RadioButton("Gravity##g1", &primaryDependentVariable, 3))		{ m_sim.primaryVariable = static_cast<SimulationStats::variable>(primaryDependentVariable); }; ImGui::SameLine();
-	if(ImGui::RadioButton("Time##t1", &primaryDependentVariable, 4))		{ m_sim.primaryVariable = static_cast<SimulationStats::variable>(primaryDependentVariable); };
+	// if(ImGui::RadioButton("Time##t1", &primaryDependentVariable, 4))		{ m_sim.primaryVariable = static_cast<SimulationStats::variable>(primaryDependentVariable); };
+	
+	/* Secondary dependent variables were not working as intended. 
 	ImGui::Text("Secondary Dependent Variable");
 	if(ImGui::RadioButton("Range##r2", &secondaryDependentVariable, 0))		{ m_sim.secondaryVariable = static_cast<SimulationStats::variable>(secondaryDependentVariable); }; ImGui::SameLine();
 	if(ImGui::RadioButton("Speed##s2", &secondaryDependentVariable, 1))		{ m_sim.secondaryVariable = static_cast<SimulationStats::variable>(secondaryDependentVariable); }; ImGui::SameLine();
 	if(ImGui::RadioButton("Angle##a2", &secondaryDependentVariable, 2))		{ m_sim.secondaryVariable = static_cast<SimulationStats::variable>(secondaryDependentVariable); }; ImGui::SameLine();
 	if(ImGui::RadioButton("Gravity##g2", &secondaryDependentVariable, 3))	{ m_sim.secondaryVariable = static_cast<SimulationStats::variable>(secondaryDependentVariable); }; ImGui::SameLine();
 	if(ImGui::RadioButton("Time##t2", &secondaryDependentVariable, 4))		{ m_sim.secondaryVariable = static_cast<SimulationStats::variable>(secondaryDependentVariable); }; 
+	*/
+	ImGui::Separator();
+
 
 	// Angle slider
 	if (ImGui::SliderFloat("Throw Angle", &throwingAngle, 0, 180))
@@ -359,6 +364,7 @@ void PlayScene::GUI_Function()
 		timeSlider = m_sim.getTime();
 	}
 
+	/*  Time Slider: Was not working as intended. 
 	// Time slider
 	if(ImGui::SliderFloat("Target Time", &timeSlider, 0.1, 1000))
 	{
@@ -370,6 +376,7 @@ void PlayScene::GUI_Function()
 		rangeSlider = m_sim.getRange();
 		timeSlider = m_sim.getTime();
 	}
+	*/
 
 	if (ImGui::SliderInt("Player Position", &xPlayerPos, 0, 800))
 	{

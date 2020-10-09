@@ -1,4 +1,5 @@
 #include "SimulationStats.h"
+#include <iostream>
 
 SimulationStats::SimulationStats()
 {

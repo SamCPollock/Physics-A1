@@ -20,7 +20,8 @@ public:
 
 	// ---------- Physics Calculations ----------
 	inline float calcRange(float speed, float angle, float gravity) { return ((glm::pow(speed, 2) * glm::sin(2 * glm::radians(angle))) / gravity); }	// R = (v^2 * sin(2a)) / g
-	inline float calcAngle(float range, float speed, float gravity) { return (0.5 * (glm::asin((gravity * range) / glm::pow(speed, 2)))); }				// a = 1/2 * arcsin((gR) / v^2)
+	
+	inline float calcAngle(float range, float speed, float gravity) { return glm::degrees(0.5 * (glm::asin((gravity * range) / glm::pow(speed, 2)))); }				// a = 1/2 * arcsin((gR) / v^2)
 	inline float calcSpeed(float range, float angle, float gravity) { return (glm::sqrt(range * gravity / glm::sin(2 * glm::radians(angle)))); }		// v = sqrt(R * g / sin(2a))
 	inline float calcGravity(float range, float speed, float angle) { return ((glm::pow(speed, 2) * glm::sin(2 * glm::radians(angle))) / range); }		// g = (v^2 * sin(2a)) / R
 	inline float calcTime(float speed, float angle, float gravity)  { return ((2 * speed * glm::sin(glm::radians(angle))) / gravity); }					// t = (2v * sin(a)) / g
