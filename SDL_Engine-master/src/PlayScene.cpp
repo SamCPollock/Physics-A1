@@ -315,7 +315,7 @@ void PlayScene::GUI_Function()
 
 
 	// Angle slider
-	if (ImGui::SliderFloat("Throw Angle", &throwingAngle, 0, 180))
+	if (ImGui::SliderFloat("Throw Angle", &throwingAngle, 0.1, 179.9))
 	{
 		m_sim.setAngle(throwingAngle);
 		m_pBall->throwAngle = -throwingAngle;
@@ -340,7 +340,7 @@ void PlayScene::GUI_Function()
 		timeSlider = m_sim.getTime();
 	}
 
-	// Velocity slider
+	// Gravity slider
 	if(ImGui::SliderFloat("Simulation Gravity", &gravitySlider, 0.1, 100))
 	{
 		m_sim.setGravity(gravitySlider);
