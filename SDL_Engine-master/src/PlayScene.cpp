@@ -276,8 +276,11 @@ void PlayScene::GUI_Function()
 		m_pBall->gravityEnabled = m_sim.gravityEnabled;
 		m_pBall->throwAngle = -m_sim.getAngle();
 		m_pBall->throwSpeed = m_sim.getSpeed();
+		m_pBall->gravity = m_sim.getGravity();
 		m_pBall->getRigidBody()->velocity = m_sim.getVelocity();
 		m_pBall->getTransform()->position = m_pWookie->getTransform()->position;
+		m_pWookie->getTransform()->position = { 100, floor };
+		m_pStormtrooper->getTransform()->position = { 585, floor };
 		primaryDependentVariable = static_cast<int>(m_sim.primaryVariable);
 		secondaryDependentVariable = static_cast<int>(m_sim.secondaryVariable);
 	}
