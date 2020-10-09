@@ -77,25 +77,30 @@ void PlayScene::update()
 
 
 	// set value for RangeLabel
-	out << std::fixed << "Range: " << m_pBall->getTransform()->position.x - wookiePosition.x<< "m";
+	
+	if(m_sim.showStats)
+		out << std::fixed << "Range: " << m_pBall->getTransform()->position.x - wookiePosition.x<< "m";
 	m_pRangeLabel->setText(out.str());
 
 	// set value for HeightLabel
 	out.str("");
 	out.clear();
-	out << std::fixed << "Height: "<< - m_pBall->getTransform()->position.y + wookiePosition.y << "m";
+	if(m_sim.showStats)
+		out << std::fixed << "Height: "<< - m_pBall->getTransform()->position.y + wookiePosition.y << "m";
 	m_pHeightLabel->setText(out.str());
 
 	// set value for VelocityLabel
 	out.str("");
 	out.clear();
 	float magnitude = Util::magnitude(m_pBall->getRigidBody()->velocity);
-	out << std::fixed <<"Speed: " << magnitude << "m/s^2";
+	if(m_sim.showStats)
+		out << std::fixed <<"Speed: " << magnitude << "m/s^2";
 	m_pVelocityLabel->setText(out.str());
 
 	out.str("");
 	out.clear();
-	out << std::fixed << "Time: " << m_sim.getTime() << "s";
+	if(m_sim.showStats)
+		out << std::fixed << "Time: " << m_sim.getTime() << "s";
 	m_pStatsLabel->setText(out.str());
 }
 
@@ -321,39 +326,49 @@ void PlayScene::GUI_Function()
 	if (ImGui::SliderFloat("Throw Angle", &throwingAngle, 0.1, 179.9))
 	{
 		m_sim.setAngle(throwingAngle);
-		m_pBall->throwAngle = -throwingAngle;
-		
 		throwingAngle = m_sim.getAngle();
 		throwingVelocity = m_sim.getSpeed();
 		gravitySlider = m_sim.getGravity();
 		rangeSlider = m_sim.getRange();
 		timeSlider = m_sim.getTime();
+
+		m_pBall->gravityEnabled = m_sim.gravityEnabled;
+		m_pBall->throwAngle = -throwingAngle;
+		m_pBall->throwSpeed = throwingVelocity;
+		m_pBall->gravity = gravitySlider;
 	}
 
 	// Velocity slider
 	if (ImGui::SliderFloat("Throw Velocity", &throwingVelocity, 0, 500))
 	{
 		m_sim.setSpeed(throwingVelocity);
-		m_pBall->throwSpeed = throwingVelocity;
-
 		throwingAngle = m_sim.getAngle();
 		throwingVelocity = m_sim.getSpeed();
 		gravitySlider = m_sim.getGravity();
 		rangeSlider = m_sim.getRange();
 		timeSlider = m_sim.getTime();
+
+		m_pBall->gravityEnabled = m_sim.gravityEnabled;
+		m_pBall->throwAngle = -throwingAngle;
+		m_pBall->throwSpeed = throwingVelocity;
+		m_pBall->gravity = gravitySlider;
 	}
 
 	// Gravity slider
 	if(ImGui::SliderFloat("Simulation Gravity", &gravitySlider, 0.1, 100))
 	{
 		m_sim.setGravity(gravitySlider);
-		m_pBall->gravity = m_sim.getGravity();
 
 		throwingAngle = m_sim.getAngle();
 		throwingVelocity = m_sim.getSpeed();
 		gravitySlider = m_sim.getGravity();
 		rangeSlider = m_sim.getRange();
 		timeSlider = m_sim.getTime();
+
+		m_pBall->gravityEnabled = m_sim.gravityEnabled;
+		m_pBall->throwAngle = -throwingAngle;
+		m_pBall->throwSpeed = throwingVelocity;
+		m_pBall->gravity = gravitySlider;
 	}
 
 	// Range slider
@@ -366,6 +381,11 @@ void PlayScene::GUI_Function()
 		gravitySlider = m_sim.getGravity();
 		rangeSlider = m_sim.getRange();
 		timeSlider = m_sim.getTime();
+
+		m_pBall->gravityEnabled = m_sim.gravityEnabled;
+		m_pBall->throwAngle = -throwingAngle;
+		m_pBall->throwSpeed = throwingVelocity;
+		m_pBall->gravity = gravitySlider;
 	}
 
 
