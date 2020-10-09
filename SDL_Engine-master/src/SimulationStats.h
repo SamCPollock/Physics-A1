@@ -71,6 +71,7 @@ private:
 	glm::vec2	velocity;
 
 	float		altRange;
+	float		altSpeed;
 	float		altAngle;
 	float		altTime;
 	glm::vec2	altVelocity;

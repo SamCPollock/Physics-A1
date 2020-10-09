@@ -25,9 +25,11 @@ void SimulationStats::ResetToDefaults()
 	velocity = calcVelocity(speed, angle);
 	
 	altAngle = 90 - angle;
-	altRange = calcRange(speed, altAngle, gravity);
-	altTime = calcTime(speed, altAngle, gravity);
-	altVelocity = calcVelocity(speed, altAngle);
+	//altSpeed = calcSpeed(altRange, altAngle, gravity);
+	altSpeed = speed;
+	altRange = calcRange(altSpeed, altAngle, gravity);
+	altTime = calcTime(altSpeed, altAngle, gravity);
+	altVelocity = calcVelocity(altSpeed, altAngle);
 }
 
 // Set all other variables, keeping the specified one fixed
@@ -41,10 +43,11 @@ void SimulationStats::setVariable(variable fixed_variable)
 		break;
 	case SimulationStats::variable::angle:
 		angle = calcAngle(range, speed, gravity);
-		altAngle = 90 - angle;
+		altAngle = calcAltAngle(angle);
 		break;
 	case SimulationStats::variable::speed:
 		speed = calcSpeed(range, angle, gravity);
+		//altSpeed = calcSpeed(altRange, altAngle, gravity);
 		break;
 	case SimulationStats::variable::gravity:
 		gravity = calcGravity(range, speed, angle);
@@ -75,7 +78,7 @@ void SimulationStats::setAngle(float value)
 	altAngle = calcAltAngle(value);
 	setVariable(variable::angle);
 	velocity = calcVelocity(speed, angle);
-	altVelocity = calcVelocity(speed, altAngle);
+	altVelocity = calcVelocity(altSpeed, altAngle);
 }
 
 // Calling this function will set the given value, but will also set the predetermined variable value (either primary or secondary) in order to ensure all other variables remain constant.
@@ -84,7 +87,7 @@ void SimulationStats::setSpeed(float value)
 	speed = value;
 	setVariable(variable::speed);
 	velocity = calcVelocity(speed, angle);
-	altVelocity = calcVelocity(speed, altAngle);
+	altVelocity = calcVelocity(altSpeed, altAngle);
 }
 
 // Calling this function will set the given value, but will also set the predetermined variable value (either primary or secondary) in order to ensure all other variables remain constant.
@@ -99,7 +102,7 @@ void SimulationStats::setTime(float value)
 {
 	time = value;
 	setVariable(variable::time);
-	altTime = calcTime(speed, altAngle, gravity);
+	altTime = calcTime(altSpeed, altAngle, gravity);
 }
 
 void SimulationStats::setTimeScale(float scale)
