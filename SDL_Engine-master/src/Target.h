@@ -5,6 +5,7 @@
 #include "DisplayObject.h"
 
 
+
 class Target final : public DisplayObject {
 public:
 	Target();
@@ -17,6 +18,8 @@ public:
 
 	void doThrow();
 
+	void setTimescale(float scale);
+
 	bool gravityEnabled = false;
 	float gravity;
 	bool simStarted = false;
@@ -24,7 +27,7 @@ public:
 	float throwSpeed;
 	glm::vec2 throwPosition;
 	float throwAngle;
-
+	float timeScale = 1;
 private:
 	void m_move();
 	void m_checkBounds();

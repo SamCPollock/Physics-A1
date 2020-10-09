@@ -252,6 +252,7 @@ void PlayScene::GUI_Function()
 	static float gravitySlider = m_sim.getGravity();
 	static float rangeSlider = m_sim.getRange();
 	static float timeSlider = m_sim.getTime();
+	static float timeScaleSlider = m_sim.getTimescale();
 	static int xPlayerPos = 100;
 	static int xStormtrooperPos = xPlayerPos + m_sim.getRange();
 	static int primaryDependentVariable = static_cast<int>(m_sim.primaryVariable);
@@ -364,6 +365,8 @@ void PlayScene::GUI_Function()
 		timeSlider = m_sim.getTime();
 	}
 
+
+
 	/*  Time Slider: Was not working as intended. 
 	// Time slider
 	if(ImGui::SliderFloat("Target Time", &timeSlider, 0.1, 1000))
@@ -389,6 +392,15 @@ void PlayScene::GUI_Function()
 	{
 		m_pStormtrooper->getTransform()->position.x = xStormtrooperPos;
 	}
+
+	if (ImGui::SliderFloat("Time Scale", &timeScaleSlider, 0.1, 10))
+	{
+		m_sim.setTimeScale(timeScaleSlider);
+		std::cout << m_sim.getTimescale();
+		m_pBall->setTimescale(timeScaleSlider);
+
+	}
+
 
 	ImGui::End();
 	ImGui::EndFrame();

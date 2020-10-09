@@ -44,7 +44,7 @@ void Target::m_move()
 {
 	if(simStarted)
 	{
-		float deltaTime = 1.0f / 60;
+		float deltaTime = 1.0f / 60 * timeScale;
 		glm::vec2 gravityvec = glm::vec2(0, gravity);
 		float metersPerPixel = 1;
 
@@ -81,3 +81,10 @@ void Target::doThrow()
 	getRigidBody()->velocity *= throwSpeed;
 	getTransform()->position = throwPosition;
 }
+
+void Target::setTimescale(float scale)
+{
+	timeScale = scale;
+}
+
+

@@ -101,3 +101,8 @@ void SimulationStats::setTime(float value)
 	setVariable(variable::time);
 	altTime = calcTime(speed, altAngle, gravity);
 }
+
+void SimulationStats::setTimeScale(float scale)
+{
+	timescale = scale;
+}

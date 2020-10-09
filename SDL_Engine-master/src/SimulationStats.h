@@ -33,6 +33,7 @@ public:
 	void setSpeed(float speed);
 	void setGravity(float gravity);
 	void setTime(float time);
+	void setTimeScale(float scale);
 
 	// Accessor Functions
 	float getTimescale() { return timescale; }
